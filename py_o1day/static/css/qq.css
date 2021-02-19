@@ -3,13 +3,13 @@
     top: 0;
     left: 0;
     background-image: url(../img/qq_bg.jpg);
-    width: 680px;
+    width: 465px;
     height: 100%;
     float: left;
 }
 
 .rg{
-    width: 800px;
+    width: 1000px;
     height: 100%;
     float: right;
 }
