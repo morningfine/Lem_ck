@@ -40,7 +40,7 @@ def main():
             bm.add_book(book)
         elif choose == "3":
             num = input("请输入要删除的图书编号：")
-            bm.del_book(num)
+            bm.del_book_by_id(num)
         elif choose == "4":
             num = input("请输入要查找的图书编号：")
             bm.find_book(num)

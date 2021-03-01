@@ -63,7 +63,7 @@ class BookManage:
         """
         self.book_lists.append(book)
 
-    def del_book(self, num):
+    def del_book_by_id(self, num):
         """
         删除图书
         :return:
