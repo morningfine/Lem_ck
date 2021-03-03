@@ -1,0 +1,26 @@
+#  迭代器应用场景  ， 迭代的意义
+1. list存1~10000的数据  （占 10000个整数的内存），而迭代器 占用几个整数的内存
+2. 爬虫（用Python批量下载图片） 把所有图片都放到list中，占用内存；  每次获得一个图片，把图片保存，
+类似装水： 把一桶水  用杯子 转义到 另一个水桶中
+list：50个杯子，
+迭代器：1个杯子
+
+#  image_spider.py  功能：批量下载某网站所有的图片, 伪代码思路如下：
+def get_all_urls(): # 获得网站所有页码对应的url
+    urls = []
+    return urls
+get_all_image_path(url) :获得某url页面中所有的图片地址
+    img_path = 'http://adadf'
+    ...
+    yield img_path
+
+download(img_path) : 下载图片
+    with open(...) as f:
+        f.write(...)
+def main():
+    urls = get_all_urls()  #  获得所有网页的地址
+
+    for url in urls:
+        img_path_gen = get_all_image_path(url)  # 获得当前页所有图片地址
+        for img_path in img_path_gen:
+            download(img_path)
