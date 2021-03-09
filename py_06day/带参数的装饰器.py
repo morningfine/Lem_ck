@@ -29,4 +29,24 @@ def add(a, b):
     return a + b
 
 
-add(1, 2)
+class Log1:
+    def __init__(self, filename: str):
+        self.filename = filename
+
+    def __call__(self, func):
+        def wrapper(*args, **kwargs):
+            print(args)
+            print(self.filename)
+            results = func(*args, **kwargs)
+            return results
+        return wrapper
+
+
+@Log1(filename="xxx.log")
+def add1(a, b):
+    return a + b
+
+
+if __name__ == '__main__':
+    # add(1, 2)
+    print(add1(1, 3))
