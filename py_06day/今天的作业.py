@@ -35,6 +35,13 @@ def f1():
     time.sleep(3)
 
 
+@CallTime
+def f2(a, b, c):
+    time.sleep(3)
+    return a+b+c
+
+
 if __name__ == '__main__':
     print(f(1, 2))
     f1()
+    print(f2(1, 2, 3))
