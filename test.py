@@ -1,4 +1,5 @@
 import time
+import random
 
 
 def get_time_stamp():
@@ -11,5 +12,7 @@ def get_time_stamp():
 
 
 num = get_time_stamp()
+num1 = random.randint(0, 1)
 
-print(num)
+if __name__ == '__main__':
+    print(num1)
