@@ -26,7 +26,8 @@ class Work:
             cls.times += 1
             cls.obj_set.append(cls.obj)
         else:
-            cls.obj = cls.obj_set[random.randint(0, 4)]
+            # cls.obj = cls.obj_set[random.randint(0, 4)]
+            cls.obj = random.choice(cls.obj_set)
         return cls.obj
 
 
