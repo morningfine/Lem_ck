@@ -16,3 +16,6 @@ num1 = random.randint(0, 1)
 
 if __name__ == '__main__':
     print(num1)
+    print(4.15+3.15)
+    print(int(False))
+
