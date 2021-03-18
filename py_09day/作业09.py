@@ -5,6 +5,41 @@
 2、一个列表中有100个url地址（假设请求每个地址需要0.5秒），请设计程序一个程序，获取列表中的url地址，使用4个线程去发送这100个请求，计算出总耗时！
 """
 import time
+from multiprocessing.pool import ThreadPool
+from queue import Queue
+
+
+def send_request(q: Queue):
+    while not q.empty():
+        print(q.get())
+        time.sleep(0.5)
+        q.task_done()
+
+
+def calc_time(fun):
+    def wrap(*args, **kwargs):
+        t1 = time.time()
+        fun(*args, **kwargs)
+        t2 = time.time()
+        print(f"共耗时{t2-t1}秒！")
+    return wrap
+
+
+@calc_time
+def main():
+    q = Queue()
+    for i in range(1, 101):
+        q.put(f'http://www.gushi.com/page={i}')
+    po = ThreadPool(4)
+    po.apply_async(send_request, args=(q, ))
+    q.join()
+
+
+if __name__ == '__main__':
+    main()
+
+"""
+import time
 import threading
 
 lock = threading.Lock()
@@ -37,7 +72,7 @@ if __name__ == '__main__':
     end_time = time.time()
     print(f"主程序执行完成！耗时{(end_time-start_time):.2f}!")
 
-
+"""
 # import time
 # from multiprocessing import Pool
 #
