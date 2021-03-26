@@ -42,7 +42,7 @@ def downloader(q: Queue):
         # for i in css_list:
         #     print(i)
         # with open(f"./asset/css/")
-        with open(f"./春天{qid}.html", "w+", encoding="utf-8") as f:
+        with open(f"./春天{qid}.html", "wb", encoding="utf-8") as f:
             f.write(html_sourc)
         time.sleep(1)
     # print(text1)

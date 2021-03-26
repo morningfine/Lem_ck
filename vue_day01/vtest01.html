@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue测试</title>
+    <script src="js/vue.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+</head>
+<body>
+<div id="app">
+    <p>{{message}}</p>
+    <input type="text">
+</div>
+</body>
+<script type="text/javascript">
+    var mod = {   //  model : 存储数据
+        message: 'Hello World!',
+    }
+
+    var app = new Vue({el: '#app', data: mod});  // 建立绑定
+</script>
+</html>
