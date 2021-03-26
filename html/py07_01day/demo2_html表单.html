@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>html表单</title>
+</head>
+<body>
+<!--
+html表示:
+表单:form
+    input:输入框
+    type属性:
+            text:文本
+            password:密码
+            submit:提交按钮(点击之会主动提交表单)
+            button:普通按钮(点击之后没有特殊效果)
+            checkbox：多选框
+            radio:单选框
+            file：文件上传
+            hidden:影藏的表单域（预设一个要传递的参数和值，但是不会在页面上显示）
+            reset:情况表单内容
+
+    name:表单的参数名
+    value:表单的值
+    placeholder：表单的提示内容
+
+label标签：将表单前的提示内容和表单进行关联
+
+textarea标签：文本输入框
+
+
+-->
+
+<!--<div>-->
+
+<!--    <form action="" method="get">-->
+<!--        账号: <input type="text" name="user" value=""><br>-->
+<!--        密码: <input type="password" name="pwd" value=""><br>-->
+<!--        &lt;!&ndash;        <input type="submit" value="登录">&ndash;&gt;-->
+<!--        <input type="button" value="登录">-->
+<!--    </form>-->
+
+<!--</div>-->
+
+
+<div>
+    <h1>注册</h1>
+    <form action="" method="get">
+        <input type="hidden" name="token" value="dsaudgausdey2uq76r8q20irwasw7e82ijw6789032iugu3">
+        <label for="u01">账号: </label>
+        <input type="text" name="user" value="" placeholder="输入账号" id="u01"><br>
+        <label for="p01">密码: </label>
+        <input type="password" name="pwd" value="" placeholder="输入密码" id="p01"><br>
+        <!-- 单选框-->
+        性别：男 <input type="radio" name="sex" value="男">
+        女 <input type="radio" name="sex" value="女">
+        未知 <input type="radio" name="sex" value="未知">
+        <br>
+        <!--  多选框  -->
+
+        技能：
+        <label for="py01">python</label>
+        <input type="checkbox" name="skill" value="py" id="py01">
+        <label for="j01">java </label>
+        <input type="checkbox" name="skill" value="java" id="j01">
+        c++ <input type="checkbox" name="skill" value="C++">
+        <br>
+        上传头像：
+        <input type="file">
+        个人介绍：
+        <textarea name="user_info" id="u02" cols="30" rows="10"></textarea>
+
+        所在地区：<br>
+        省份
+        <select name="" id="">
+            <option value="sh">上海</option>
+            <option value="bj">北京</option>
+            <option value="zj">浙江</option>
+            <option value="gd">广东</option>
+        </select>
+        市\区
+        <select name="" id="">
+            <option value="pd">浦东</option>
+            <option value="yp">杨浦</option>
+            <option value="ja">静安</option>
+            <option value="js">金山</option>
+        </select>
+
+        <br>
+        <input type="submit" value="注册">
+        <input type="reset">
+        <!--        <input type="button" value="注册">-->
+    </form>
+    <iframe src="https://www.baidu.com" frameborder="0" width="500px" height="300px"></iframe>
+
+</div>
+
+
+</body>
+</html>
