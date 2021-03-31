@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>前端第四天作业第1题</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="div1">
+			<table border="1px" cellspacing="" cellpadding="">
+				<tr>
+					<th>ID</th>
+					<th>接口名</th>
+					<th>测试人员</th>
+					<th>项目名</th>
+					<th>项目ID</th>
+					<th>描述信息</th>
+					<th>创建时间</th>
+					<th>用例数</th>
+				</tr>
+				<tr v-for="item in cases" :key="item.id">
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.tester}}</td>
+					<td>{{item.project}}</td>
+					<td>{{item.project_id}}</td>
+					<td>{{item.desc}}</td>
+					<td>{{item.create_time}}</td>
+					<td>{{item.testcases}}</td>
+				</tr>
+			</table>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		var mod = {
+			cases:[{
+						"id": 1,
+						"name": "登录接口_自动化测试平台项目",
+						"tester": "可优",
+						"project": "自动化测试平台项目",
+						"project_id": 1,
+						"desc": "登录接口",
+						"create_time": "2019-11-06 14:50:30",
+						"testcases": 9,
+					},
+					{
+						"id": 2,
+						"name": "注册接口_自动化测试平台项目",
+						"tester": "可可",
+						"project": "自动化测试平台项目",
+						"project_id": 1,
+						"desc": "自动化测试平台项目, 注册接口",
+						"create_time": "2019-11-06 14:51:00",
+						"testcases": 0,
+					},
+					{
+						"id": 3,
+						"name": "创建项目接口_自动化测试平台项目",
+						"tester": "可优",
+						"project": "自动化测试平台项目",
+						"project_id": 1,
+						"desc": "这是自动化测试平台创建项目接口",
+						"create_time": "2019-11-06 14:51:45",
+						"testcases": 1,
+					},
+					{
+						"id": 4,
+						"name": "注册接口_前程贷P2P金融项目",
+						"tester": "小可可",
+						"project": "前程贷P2P金融项目",
+						"project_id": 2,
+						"desc": "",
+						"create_time": "2019-11-06 14:52:22",
+						"testcases": 0,
+					},
+					{
+						"id": 5,
+						"name": "登录接口_前程贷P2P金融项目",
+						"tester": "柠檬小姐姐",
+						"project": "前程贷P2P金融项目",
+						"project_id": 2,
+						"desc": "",
+						"create_time": "2019-11-06 14:52:40",
+						"testcases": 0,
+					},
+					{
+						"id": 6,
+						"name": "查看项目列表接口_前程贷P2P金融项目",
+						"tester": "柠檬小姐姐",
+						"project": "前程贷P2P金融项目",
+						"project_id": 2,
+						"desc": "",
+						"create_time": "2019-11-06 17:22:50",
+						"testcases": 1,
+					}
+				]
+		}
+		var views = {
+			el: "#div1",
+			data: mod
+		}
+		var vue = new Vue(views)
+	</script>
+</html>

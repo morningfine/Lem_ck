@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端第四天作业第2题</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="user" placeholder="请输入账号!"><br/>
+		<div>{{user}}</div>
+		<input type="text" v-model="pwd" placeholder="请输入密码!">
+		<div>{{pwd}}</div>
+	</div>
+	<script type="text/javascript">
+		var module ={
+			user:"",
+			pwd:""
+		}
+		var views = {
+			el:"#app",
+			data:module
+		}
+		var vue = new Vue(views);
+	</script>
+</body>
+</html>
