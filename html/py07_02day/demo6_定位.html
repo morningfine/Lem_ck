@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			/* 
+			 相对定位 relative:相对于原来在文档流的位置进行偏移
+			 
+			 绝对定位： 根据已经进行定位的父级元素进行偏移
+			 注意点：通常在使用决定定位时  会将腹肌元素设置为相对定位
+			 
+			 
+			 
+			 固定位置定位
+			 
+			 */
+			.box11{
+				height: 200px;
+				position: relative;
+				background: yellowgreen;
+			}
+			
+			.box1,
+			.box2,
+			.box3 {
+				height: 200px;
+				width: 200px;
+	
+				margin-left: 20px;
+
+			}
+
+			.box1 {
+				background: #00FFFF;
+				position: fixed;
+				left: 20px;
+				top: 100px;
+			}
+
+			.box2 {
+				background: yellow;
+				/* position: relative; */
+				position: absolute;
+				left: 200px;
+				top: 50px;
+			}
+
+			.box3 {
+				background: red;
+			}
+			#app{
+				position: relative;
+				height: 2000px;
+			}
+			
+			.left,.right{
+				height: 50px;
+				width: 20px;
+				background: blue;
+			}
+			.left{
+				position: absolute;
+				left: 20px;
+				top: 40%;
+			}
+			.right{
+				position: absolute;
+				right: 20px;
+				top: 40%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box11">
+			<div class="left"></div>
+			<div class="right"></div>
+			
+			
+		</div>
+		
+		<div id="app">
+			<div class="box1">
+				1111
+			</div>
+			<div class="box2">
+				222
+			</div>
+			<div class="box3">
+				3333
+			</div>
+
+			<div class="clear"></div>
+
+		</div>
+
+
+
+	</body>
+</html>

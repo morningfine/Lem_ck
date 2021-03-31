@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入vue -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<div>{{name}}</div>
+			<div>{{age}}</div>
+			<div>{{gender}}</div>
+			<button type="button" @click="add()">+</button>
+			<button type="button" @click="sub()">-</button>
+		</div>
+		
+
+		<script type="text/javascript">
+			/*
+			{{}}:插值表达式
+	
+			*/ 
+			var vue = new Vue({
+				// el  是vue绑定的页面元素
+				el: "#app",
+				// data:  是绑定到页面中的数据
+				data:{
+					name:'musen',
+					age:18,
+					gender:'男'
+				},
+				methods:{
+					// vue方法中的this代表的vue这个对象
+					add:function(){
+						this.age++
+					},
+					sub:function(){
+						this.age--
+					}
+				},
+				
+				
+			})
+		</script>
+
+
+	</body>
+</html>

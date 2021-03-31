@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			// js引入的三种方式
+			/*
+			1、第一种：行间事件: 直接在元素上 通过给元素添加事件绑定，来执行js代码
+			2、第二种：通过script标签引入外部的js文件
+			3、第三中：直接爱页面的script标签中编写js代码
+			*/ 
+		</script>
+		<!-- 引入js文件 -->
+		<script type="text/javascript" src="js/main.js"></script>
+		<script>
+			function musen(){
+				alert('musen123')
+			}
+			
+		</script>
+		
+		
+	</head>
+	<body>
+		<!-- 绑定行间事件 -->
+		<button type="button" onclick="alert(123456)">按钮1</button>
+		
+		<button type="button" onclick="alertInfo()">按钮2</button>
+		
+		<button type="button" onclick="musen()">按钮3</button>
+		
+		
+		
+		
+		
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="box">
+			<button type="button" @click="sub()">-</button>
+			<input type="text" :value="number">
+			<button type="button" v-on:click="add()">+</button>	
+		</div>
+
+		<script type="text/javascript">
+			/**
+			 * v-on：可以简写为 @
+			 * v-on:事件名 = 执行的函数
+			 */
+			var vue = new Vue({
+				el: '#box',
+				data: {
+					number:0
+				},
+				methods:{
+					add:function(){
+						this.number++
+					},
+					// 定义方法时：将function省略，和上面定义的add方法没有区别
+					sub(){
+						this.number--
+					}
+					
+				}
+			})
+			
+			
+		</script>;
+	</body>
+</html>

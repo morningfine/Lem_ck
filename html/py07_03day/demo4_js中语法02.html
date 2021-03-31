@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			
+			// 一、 while循环
+			//  break 和continue关键字和python中的作用时一样的
+			// var count = 1
+			// while(count<=10){
+			// 	console.log(count)
+			// 	count++
+			// 	// 当count等于5时，强制退出循环
+			// 	if (count==8){
+			// 		// break
+			// 		// continue
+			// 	}
+			// 	console.log(`--------------`)
+			// }
+			
+			
+			// 二、for循环
+			// 1、for条件循环 ：for(循环开始之前执行的代码，是否执行循环体的条件，循环体执行完执行执行的代码)
+			 // for (var i=1;i<=10;i++){
+				//  console.log(i) 
+			 // }
+			 
+			 // 2、for 遍历循环
+			// var arryA = [11,22,33,44]
+			// for循环遍历数组
+			// for(i in arryA){
+			// 	console.log(i,arryA[i])
+			// }
+			// 注意点：for循环遍历数组时，遍历出来的时数组的索引
+			
+			
+			var objA = {
+				name:'木森',
+				age:18,
+				func1:function(){
+					console.log('objA的func1方法')
+				},
+				func2:function(){
+					console.log('打印对象中的this')
+					console.log(this.name)
+				}
+			}
+			// for循环遍历对象
+			for (i in objA){
+				console.log(i,objA[i])
+			}
+			// 注意点：for循环遍历对象时，遍历出来的是对象的属性名
+			
+		
+			
+		</script>
+		
+		
+		
+		
+	</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 单行注释
+			/*
+			多行注释
+			注释11
+			注释222
+			注释222
+			*/ 
+			// 一、js条件语句
+			// 1、if-else语句
+			
+			// if(10>20){
+			// 	console.log('10>5成立！')
+			// }else{
+			// 	console.log('10>5不成立！')
+			// }
+			
+			// 2、if- else if -else
+			// var number = 55
+			// if (number>=80){
+			// 	console.log('成绩很优秀')
+			// }else if(60<number && number<80){
+			// 	console.log(number)
+			// 	console.log('成绩及格')
+			// }else{
+			// 	console.log('成绩不及格')
+			// }	
+			
+			// 二、js中的函数
+			
+			//1、函数的定义：
+			// function printUserInfo(name,age){
+			// 	console.log('我的名字:'+name+'我的年纪:'+age)
+			// }
+			// // 2、函数的返回值
+			// function addNumber(a,b){
+			// 	// 返回a+b的结果
+			// 	return a+b
+			// }
+			
+			// 三、js中的对象
+			/*
+			对象的定义：1、{}   ,2、new Object()
+			
+			对象的属性和方法：
+				属性名：属性值
+				方法名：函数
+			
+			对象中的this:代表的是对象本身
+			
+			*/ 
+			var objA = {
+				name:'木森',
+				age:18,
+				func1:function(){
+					console.log('objA的func1方法')
+				},
+				func2:function(){
+					console.log('打印对象中的this')
+					console.log(this.name)
+				}
+			}
+			var objB = new Object()
+			objB.name ='yuze'
+			objB.age =18
+			objB.func001 = function(){
+				console.log('objB的func1方法')
+			}
+			//  扩展：函数中的this:代表的是window对象（窗口）
+			function work01(){
+				console.log(this)
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+		
+		
+		
+	</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var arryA = [11,22,33,44,55,66]
+			// forEach遍历数组
+			// arryA.forEach(function (item,i,arry){
+			// 	// item 是遍历出来的值
+			// 	// i 是对应的索引
+			// 	//arry 是数组本身
+			// 	console.log(item,i,arry)
+			// })
+			
+			// filter:遍历数组，进行过滤
+			// var res = arryA.filter(function(item,i){
+			// 	return item>50
+			// })
+			// console.log(res)
+			
+			// find方法：查找第一个符合条件的值
+			var res = arryA.find(function(item,i){
+				console.log('---------',item)
+				if(item ==33){
+					return  true
+				}else{
+					return false
+				}
+			})
+			console.log(res)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+		
+		
+		
+		
+	</body>
+</html>

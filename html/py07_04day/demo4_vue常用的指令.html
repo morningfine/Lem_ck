@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+
+		<div id="box">
+			<span>{{user}}</span>
+			<span v-text="user"></span>
+			<div v-html="info"></div>
+			<div v-pre>{{info}}</div>
+			<input type="text" v-show="status">
+
+
+
+
+		</div>
+
+
+		<script type="text/javascript">
+			/*
+			常见指令： 
+			v-text：往标签中插入文本值
+			v-html:往标签中插入html元素
+			v-pre:在标签中显示原始文本内容
+			v-show:控制元素的显示和隐藏（根据v-show指定的布尔值例来决定）
+			*/
+
+
+
+			var vue = new Vue({
+				el: '#box',
+				data: {
+					user: '小柠檬',
+					info: '<h1>python</h1>',
+					status:false
+				}
+			})
+		</script>
+
+
+
+
+
+
+	</body>
+</html>
