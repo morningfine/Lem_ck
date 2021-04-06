@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h3>产品名：{{name}}</h3>
+			<h3>单价：{{price}}</h3>
+			<h3>
+				数量：
+				<button type="button" @click="sub()">-</button>
+				<span>{{num}}</span>
+				<button type="button" v-on:click="add()">+</button>
+			</h3>
+			<hr>
+			<!-- <h2>合计金额：{{sum_func()}}</h2> -->
+			<h2>合计金额：{{sum}</h2>
+		</div>
+		<script type="text/javascript">
+			/**
+			 *计算属性：通过computed进行定义
+			  作用：
+			 * 
+			 * 
+			 */ 
+			var vue = new Vue({
+				el: '#app',
+				data: {
+					name: '小柠檬',
+					price: 8,
+					num: 0,
+				},
+				methods: {
+					add: function() {
+						this.num++
+					},
+					// 定义方法时：将function省略，和上面定义的add方法没有区别
+					sub() {
+						this.num--
+					},
+					// sum_func(){
+					// 	return this.price * this.num
+					// }
+				},
+				// 定义计算属性，
+				computed: {
+					sum: function() {
+						return this.price * this.num
+					}
+				},
+
+			})
+		</script>
+
+
+
+	</body>
+</html>

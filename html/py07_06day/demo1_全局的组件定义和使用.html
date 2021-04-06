@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<style>
+			.title {
+				background: #0000FF;
+				height: 80px;
+				margin-bottom: 5px;
+			}
+
+			.content {
+				background: #FAEBD7;
+				height: 1000px;
+			}
+
+			.footer {
+				margin-top: 10px;
+				background: #9ACD32;
+				height: 100px;
+			}
+
+			.left {
+				width: 15%;
+				background: #00FFFF;
+				height: 100%;
+				float: left;
+				margin-right: 0.5%;
+			}
+
+			.right {
+				width: 84%;
+				background: #FF0000;
+				height: 100%;
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<!-- 顶部菜单栏 -->
+			<div class="title">
+				<header-con></header-con>
+				<!-- <HeaderCon></HeaderCon> -->
+			</div>
+			<!-- 中间的主题内容 -->
+			<div class="content">
+				<!-- 左边的菜单 -->
+				<div class="left">
+					<left-con></left-con>
+				</div>
+				<!-- 右边的内容 -->
+				<div class="right">
+					<right-con></right-con>
+					
+				</div>
+			</div>
+		</div>
+
+	
+
+		<script type="text/javascript">
+			/*
+			1、定义组件：
+				全局组件：使用Vue.component定义组件
+			2、在页面中使用组件 <组件名></组件名>
+			
+			3、组件名的命名注意点：
+				如果定义组件的之后组件名，使用的是大驼峰的命名风格，在页面中引用组件的时候 ，
+				要使用中划线命名风格(xx-xx)
+				
+			4、定义的全局组件 可以再其他的组件中直接引用
+				注意点：在组件的版本中引用其他组件可以使用大驼峰命名法
+			
+			建议：组件命名尽量使用中划线命名风格  xxx-xxx
+			*/ 
+			
+			
+			//  全局的组件定义：
+			// Vue.component('header-con', {
+			// 	template: `
+			// 	<div><h1>这个是页面头部组件</h1></div>
+			// 	`
+			// })
+			Vue.component('HeaderCon', {
+				template: `
+				<div><h1>这个是页面头部组件9999</h1></div>
+				`
+			})
+			
+			Vue.component('left-con', {
+				template: `
+				<div> <h1>这个是页面左边内容的组件</h1>
+				<my-button></my-button></div>
+				`
+
+			})
+			Vue.component('right-con', {
+				template: `
+				<div> 
+				<h1>这个是页面左边内容的组件</h1>
+				<my-button></my-button>
+				<MusenButton></MusenButton>
+				</div>
+				`
+
+			})
+			
+			Vue.component('my-button',{
+				template:`
+				<button>mybutton</button>
+				`
+			})
+			Vue.component('MusenButton',{
+				template:`
+				<button>musen</button>
+				`
+			})
+
+			var vm = new Vue({
+				el: '#app',
+				data: {
+
+				},
+
+			})
+		</script>
+
+
+	</body>
+</html>

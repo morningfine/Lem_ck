@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<div @click="work3">
+				<div @click="work2()">
+					<button type="button" @click.stop="work1()">按钮1</button>
+					<a href="http://www.baidu.com" @click.prevent.stop="handleA()">百度</a>
+				</div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+			/*
+			事件冒泡：子元素触发某个事件之后，会依次将这个事件传递给父元素
+			vue事件修饰符：
+				stop: 阻止事件冒泡
+				prevent:阻止元素默认的事件行为
+			*/
+
+
+			var vm = new Vue({
+				el: '#app',
+				data: {},
+				methods: {
+					work1: function() {
+						console.log('work1-----')
+					},
+					work2: function() {
+						console.log('work2-----')
+					},
+					work3: function() {
+						console.log('---work30000')
+					},
+					handleA:function(){
+						console.log('点击了a标签')
+					}
+				}
+			})
+		</script>
+
+
+	</body>
+</html>

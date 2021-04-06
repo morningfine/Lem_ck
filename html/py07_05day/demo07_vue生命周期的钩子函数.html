@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<div>{{message}}</div>
+			<button @click="update01">按钮</button>
+			<button type="button" @click="btn">销毁</button>
+		</div>
+
+
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					message: '木森'
+				},
+				methods:{
+					update01:function(){
+						this.message='mmmmm'
+					},
+					btn:function(){
+						//销毁vue实例对象
+						this.$destroy()
+					}
+				},
+				
+				beforeCreate: function() {
+				    console.group('------beforeCreate--vue创建前状态------');
+				    console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+				    console.log("%c%s", "color:red", "data   : " + this.$data); //undefined 
+				    console.log("%c%s", "color:red", "message: " + this.message)
+							},
+				created: function() {
+				    console.group('------created--vue创建完毕状态------');
+				    console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+				    console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化 
+				    console.log("%c%s", "color:red", "message: " + this.message); //已被初始化
+							},
+				beforeMount: function() {
+				    console.group('------beforeMount,data数据挂载前状态------');
+				    console.log("%c%s", "color:red", "el     : " + (this.$el)); //已被初始化
+				    console.log(this.$el.innerHTML);
+				    console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化  
+				    console.log("%c%s", "color:red", "message: " + this.message); //已被初始化  
+							},
+				mounted: function() {
+				    console.group('------mounted data数据挂载结束状态------');
+				    console.log("%c%s", "color:red", "el     : " + this.$el); //已被初始化
+				    console.log(this.$el.innerHTML);
+				    console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
+				    console.log("%c%s", "color:red", "message: " + this.message); //已被初始化 
+							},
+				beforeUpdate: function() {
+				    console.group('beforeUpdate  data数据更新前状态==============');
+				    console.log("%c%s", "color:red", "el     : " + this.$el);
+				    console.log(this.$el.innerHTML);
+				    console.log("%c%s", "color:red", "data   : " + this.$data);
+				    console.log("%c%s", "color:red", "message: " + this.message);
+							},
+				updated: function() {
+				    console.group('updated  data数据更新完成状态==============');
+				    console.log("%c%s", "color:red", "el     : " + this.$el);
+				    console.log(this.$el.innerHTML);
+				    console.log("%c%s", "color:red", "data   : " + this.$data);
+				    console.log("%c%s", "color:red", "message: " + this.message);
+							},
+				beforeDestroy: function() {
+				    console.group('beforeDestroy  vue对象销毁前状态==============');
+				    console.log("%c%s", "color:red", "el     : " + this.$el);
+				    console.log(this.$el.innerHTML);
+				    console.log("%c%s", "color:red", "data   : "+ this.$data);
+				    console.log("%c%s", "color:red", "message: " + this.message);
+							},
+				destroyed: function() {
+				    console.group('destroyed  vue对象销毁完成状态==============');
+				    console.log("%c%s", "color:red", "el     : " + this.$el);
+				    console.log(this.$el.innerHTML);
+				    console.log("%c%s", "color:red", "data   : "+ this.$data);
+				    console.log("%c%s", "color:red", "message: " + this.message)
+				                }
+			})
+		</script>
+
+
+
+
+
+	</body>
+</html>

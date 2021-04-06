@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<header-con></header-con>
+			<left-con></left-con>
+		</div>
+		<script type="text/javascript">
+			/*
+			
+			*/
+			var vm = new Vue({
+				el: '#app',
+				data: {
+
+				},
+				// 定义局部组件：只能在父组件(页面)中使用，不能在其他的组件中引用
+				components: {
+					// 组件名要使用引号包起来，不然会报语法错误-
+					'header-con': {
+						template: `
+						<button>按钮1</button>
+						`
+					},
+					'left-con': {
+						template: `
+						<div>
+							<span>python666</span>
+						</div>
+						`
+					}
+				}
+			})
+			
+		</script>
+
+
+	</body>
+</html>

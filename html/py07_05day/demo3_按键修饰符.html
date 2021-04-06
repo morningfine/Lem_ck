@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<form action="">
+				账号：<input type="text" v-model.lazy="loginForm.user"> <br>
+				密码：<input type="password" v-model="loginForm.pwd" @keyup.enter="login_btn()"><br>
+				<button type="button" @click="login_btn()">点击登录</button>
+			</form>
+
+		</div>
+
+		<script type="text/javascript">
+			/*
+			事件冒泡：子元素触发某个事件之后，会依次将这个事件传递给父元素
+			vue事件修饰符：
+				stop: 阻止事件冒泡
+				prevent:阻止元素默认的事件行为
+				
+			按键修饰符
+				keyup.enter:回车键
+			
+			表单修饰符：
+				trim：去除输入首尾的空白
+			
+			
+			
+			*/
+
+			Vue.config.keyCodes.a = 65
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					loginForm:{
+						user:'',
+						pwd:''
+					}
+				},
+				methods: {
+					login_btn:function(){
+						alert('点击了登录')
+					}
+				}
+			})
+		</script>
+
+
+	</body>
+</html>

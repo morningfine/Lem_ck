@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<data-views :lists="cases1" @run='recvData($event)'>
+				<template>
+					<span>项目名：柠檬班</span>
+					<span>版本：V1.0</span>
+					<span>时间：2021-04-02</span>
+				</template>
+			</data-views>
+			
+			
+			<hr>
+			<div>
+				<h3>执行的用例信息:{{info}}</h3>
+			</div>
+		</div>
+		<script type="text/javascript">
+			/*
+			插槽：定义组件时，给父组件预留填充内容(html)的插口(空白)
+			
+			*/
+			Vue.component('data-views', {
+				// 指定父组件中引用该组件时，传递数据的参数名
+				props: ['lists'],
+				template: `
+				<div>
+					<h1>-------------子组件---------------</h1>
+					<slot></slot>
+					<table border="" cellspacing="" cellpadding="">
+						<tr>
+							<th>ID</th>
+							<th>接口名</th>
+							<th>测试人员</th>
+							<th>项目名</th>
+							<th>项目ID</th>
+							<th>描述信息</th>
+							<th>创建时间</th>
+							<th>用例数</th>
+							<th>操作</th>
+						</tr>
+						<tr :key='item.id' v-for="item in lists">
+							<td>{{item.id}}</td>
+							<td>{{item.name}}</td>
+							<td>{{item.tester}}</td>
+							<td>{{item.project}}</td>
+							<td>{{item.project_id}}</td>
+							<td>{{item.desc}}</td>
+							<td>{{item.create_time}}</td>
+							<td>{{item.testcases}}</td>
+							<th><button @click="$emit('run',item)">执行</button></th>
+						</tr>
+					</table>
+					</div>
+					`
+			})
+
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					cases1: [{
+							"id": 1,
+							"name": "登录接口_自动化测试平台项目",
+							"tester": "可优",
+							"project": "自动化测试平台项目",
+							"project_id": 1,
+							"desc": "登录接口",
+							"create_time": "2019-11-06 14:50:30",
+							"testcases": 9,
+						},
+						{
+							"id": 2,
+							"name": "注册接口_自动化测试平台项目",
+							"tester": "可可",
+							"project": "自动化测试平台项目",
+							"project_id": 1,
+							"desc": "自动化测试平台项目, 注册接口",
+							"create_time": "2019-11-06 14:51:00",
+							"testcases": 0,
+						}
+					],
+					info: ''
+				},
+				methods: {
+					// 父组件中监听到子组件触发的事件之后，接收数据的方法
+					recvData: function(value) {
+						console.log(value)
+						this.info = value
+					}
+				}
+
+			})
+		</script>
+		
+
+	</body>
+</html>

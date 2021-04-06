@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<header-con></header-con>
+			<left-con></left-con>
+		</div>
+		<script type="text/javascript">
+			/*
+			1、组件中的数据 同样放在data字段中，
+				注意点：组件中的data是一个方法(函数)，数据为函数return返回出来的内容
+				注意点：组件的模板内容，必须有一个根节点（最外层只有一个标签）
+			2、组件中的方法：定义在methods中
+			
+			
+			*/
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					name: '木森',
+					age: 99
+				},
+				// 定义局部组件：只能在父组件(页面)中使用，不能在其他的组件中引用
+				components: {
+					// 组件名要使用引号包起来，不然会报语法错误-
+					'header-con': {
+						template: `
+						<button @click='handleClick'>按钮1</button>
+						`,
+						methods: {
+							handleClick: function() {
+								console.log('----handleClick-----')
+							}
+						},
+					},
+					'left-con': {
+						template: `
+						<div>
+							<h2>名字{{name}}</h2>
+							<h2>名字{{age}}</h2>
+							<h2>计算属性sum:{{sum}}</h2>
+							<span>python666</span>
+						</div>
+						`,
+						// 组件中的数据 同样放在data字段中，
+						// 注意点：组件中的data是一个方法(函数)，数据为函数return返回出来的内容
+						data: function() {
+							return {
+								name: 'musen',
+								age: 18
+							}
+						},
+						computed: {
+							sum: function() {
+								return this.name + this.age
+							}
+						},
+						watch: {
+							age: function(val) {
+								console.log(val)
+							}
+						}
+					}
+				}
+			})
+		</script>
+
+
+	</body>
+</html>

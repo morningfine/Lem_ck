@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	</head>
+	<body>
+		<div id="box">
+			数量：
+			<button type="button" @click="sub()">-</button>
+			<input type="text" :value="number">
+			<button type="button" v-on:click="add()">+</button>
+			<hr>
+			<input type="text" v-model.lazy="name">
+				
+		</div>
+
+		<script type="text/javascript">
+			/**
+			 *  侦听器 监测数据的值是否发生变化
+			 */
+			var vue = new Vue({
+				el: '#box',
+				data: {
+					number:0,
+					name :'musen'
+				},
+				methods:{
+					add:function(){
+						this.number++
+					},
+					// 定义方法时：将function省略，和上面定义的add方法没有区别
+					sub(){
+						this.number--
+					}
+					
+				},
+
+				// 侦听器 
+				watch:{
+					number:function(value){
+						console.log('监测到number的值发生了变化',value)
+						if (value<0){
+							alert('数量不能少于0')
+							this.number=0
+						}	
+					},
+					name:function(value){
+						console.log('监测到name的值发生了变化',value)	
+					}
+				}
+			})
+			
+			
+		</script>;
+	</body>
+</html>
