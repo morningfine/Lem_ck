@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端第6天作业</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+			.title {
+				background: #0000FF;
+				height: 80px;
+				margin-bottom: 5px;
+			}
+
+			.content {
+				background: #FAEBD7;
+				height: 1000px;
+			}
+
+			.footer {
+				margin-top: 10px;
+				background: #9ACD32;
+				height: 100px;
+			}
+
+			.left {
+				width: 15%;
+				background: #00FFFF;
+				height: 100%;
+				float: left;
+				margin-right: 0.5%;
+			}
+
+			.right {
+				width: 84%;
+				background: #FF0000;
+				height: 100%;
+				float: left;
+			}
+		</style>
+</head>
+<body>
+<div id="app">
+    <div class="top">
+        <zujianming></zujianming>
+    </div>
+    <div class="content">
+        <div class="left">
+            <head-con :lists1="cases1" @run="recev($event)">
+
+            </head-con>
+        </div>
+        <div class="right">
+            <head-con :lists1="cases2" @run="recev($event)">
+                <template slot="head1">
+                    <h1>python is very good!</h1>
+                </template>
+            </head-con>
+            <hr>
+			<div>
+				<h3>执行的用例信息:{{info}}</h3>
+
+			</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Vue.component("head-con", {
+        props: ["lists1"],
+        template: `
+			<div>
+				<table border="" cellspacing="" cellpadding="">
+					<tr>
+						<th>ID</th>
+						<th>接口名</th>
+						<th>测试人员</th>
+						<th>项目名</th>
+						<th>项目ID</th>
+						<th>描述信息</th>
+						<th>创建时间</th>
+						<th>用例数</th>
+						<th>操作</th>
+					</tr>
+					<tr :key='item.id' v-for="item in lists1">
+						<td>{{item.id}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.tester}}</td>
+						<td>{{item.project}}</td>
+						<td>{{item.project_id}}</td>
+						<td>{{item.desc}}</td>
+						<td>{{item.create_time}}</td>
+						<td>{{item.testcases}}</td>
+						<td><button @click = "$emit('run',item)">执行</button></td>
+					</tr>
+				</table>
+				<slot name='head1'></slot>
+			</div>
+			`
+    })
+    var module = {
+        user: "",
+        pwd: ""
+    }
+    var module1 = {
+        cases1: [{
+            "id": 1,
+            "name": "登录接口_自动化测试平台项目",
+            "tester": "可优",
+            "project": "自动化测试平台项目",
+            "project_id": 1,
+            "desc": "登录接口",
+            "create_time": "2019-11-06 14:50:30",
+            "testcases": 9,
+            },
+            {
+                "id": 2,
+                "name": "注册接口_自动化测试平台项目",
+                "tester": "可可",
+                "project": "自动化测试平台项目",
+                "project_id": 1,
+                "desc": "自动化测试平台项目, 注册接口",
+                "create_time": "2019-11-06 14:51:00",
+                "testcases": 0,
+            }
+        ],
+        cases2: [{
+            "id": 3,
+            "name": "创建项目接口_自动化测试平台项目",
+            "tester": "可优",
+            "project": "自动化测试平台项目",
+            "project_id": 1,
+            "desc": "这是自动化测试平台创建项目接口",
+            "create_time": "2019-11-06 14:51:45",
+            "testcases": 1,
+            },
+            {
+                "id": 4,
+                "name": "注册接口_前程贷P2P金融项目",
+                "tester": "小可可",
+                "project": "前程贷P2P金融项目",
+                "project_id": 2,
+                "desc": "",
+                "create_time": "2019-11-06 14:52:22",
+                "testcases": 0,
+            },
+            {
+                "id": 5,
+                "name": "登录接口_前程贷P2P金融项目",
+                "tester": "柠檬小姐姐",
+                "project": "前程贷P2P金融项目",
+                "project_id": 2,
+                "desc": "",
+                "create_time": "2019-11-06 14:52:40",
+                "testcases": 0,
+            },
+            {
+                "id": 6,
+                "name": "查看项目列表接口_前程贷P2P金融项目",
+                "tester": "柠檬小姐姐",
+                "project": "前程贷P2P金融项目",
+                "project_id": 2,
+                "desc": "",
+                "create_time": "2019-11-06 17:22:50",
+                "testcases": 1,
+            }
+        ],
+        info:""
+    }
+
+    var views = {
+        el: "#app",
+        data: module1,
+        components: {
+            "zujianming": {
+                template: `
+						<div>
+							用户名：<input type="text" :value="user">
+							密  码：<input type="text" value="pwd">
+							<button @click="confirm">按钮1</button>
+						</div>
+						`,
+                data: function () {
+                    return {
+                        user: "zcg",
+                        pwd: "abc123"
+                    }
+                },
+                methods: {
+                    confirm: function () {
+                        console.log(this.user, this.pwd);
+                    }
+                }
+            }
+        },
+        methods: {
+            recev:function(value){
+                console.log(value);
+                this.info = value;
+            }
+        }
+
+    }
+    var aaa = new Vue(views);
+</script>
+</body>
+</html>
