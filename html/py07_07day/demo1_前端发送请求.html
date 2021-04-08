@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 使用axios发送一个get请求
+			// const pro = axios.get('http://127.0.0.1:5000/api/projects11')
+			// // 此处的res并不是接口的响应  它是一个Promise对象（异步事件的对象）
+			// console.log(pro)
+			// ----------------获取接口返回的数据(请求成功)-------------------
+			// pro.then(function(response){
+			// 	// 这个回调函数的中的response才是接口返回的响应对象
+			// 	console.log('接口的响应数据：',response)
+			// 	// 获取响应体
+			// 	console.log(response.data)
+			// 	//获取响应的状态码
+			// 	console.log((response.status))
+			// })
+			// console.log('999999999999999999')
+
+			// ----------------获取接口返回的数据(请求失败：返回的状态码是4，5系列的)-------------------
+			// pro.catch(function(error) {
+			// 	// 获取请求失败的响应对象
+			// 	console.log(error.response)
+			// 	let response = error.response
+			// 	console.log(response.data)
+			// 	console.log(response.headers)
+			// })
+
+
+			// 自定义HTTP状态码错误的范围
+			const pro = axios.get('http://127.0.0.1:5000/api/projects11', {
+				validateStatus: function(status) {
+					// 指定HTTP状态码错误的范围
+					// return status < 500;
+					return true
+				}
+			})
+
+			pro.then(function(response) {
+				// 这个回调函数的中的response才是接口返回的响应对象
+				console.log('接口的响应数据：', response)
+				// 获取响应体
+				console.log(response.data)
+				//获取响应的状态码
+				console.log((response.status))
+			})
+		</script>
+
+
+
+	</body>
+</html>

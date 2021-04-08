@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入vue -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- 引入/element-ui -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<!-- 引入axios -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<el-form ref="form" :model="form" label-width="80px">
+				<el-form-item label="账号">
+					<el-input v-model="formLogin.user"></el-input>
+				</el-form-item>
+				<el-form-item label="密码">
+					<el-input v-model="formLogin.pwd" type='password'></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" @click="loginHandle">点击登录</el-button>
+				</el-form-item>
+			</el-form>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		const request = axios.create({
+			// 指定请求HTTP响应码错误范围
+			validateStatus: function(status) {
+				return true
+			},
+			// 指定基本的url地址
+			baseURL: "http://127.0.0.1:5000",
+			// 添加固定的请求头
+			headers: {
+				'X-Custom-Header': 'foobar'
+			},
+		})
+		
+		// 添加请求拦截器：每次请求接口都会自动调用
+		request.interceptors.request.use(function (config) {
+		    // 在发送请求之前做些什么
+			// 接口需要鉴权：token
+			console.log('请求拦截器：',config)
+			token = window.sessionStorage.getItem('token')
+			console.log(token)
+			
+			// 在请求头中添加token
+		    return config;
+		  });
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				formLogin: {
+					user: '',
+					pwd: ''
+				}
+			},
+			methods: {
+				// 点击登录之后，处理登录的方法
+				loginHandle: async function() {
+					// 请求登录接口
+					const response = await request.post('/api/user/login', this.formLogin)
+					if (response.data.code==='1'){
+						alert('登录成功')
+						window.sessionStorage.setItem('token','asasasasasas')
+					}else{
+						alert(response.data.msg)
+					}
+					
+				}
+			}
+		})
+	</script>
+
+
+
+
+
+</html>

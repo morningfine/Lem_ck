@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			
+			
+		
+			// 使用axios创建请求对象
+			const request = axios.create({
+				// 指定请求HTTP响应码错误范围
+				validateStatus: function(status) {
+					return true
+				},
+				// 指定基本的url地址
+				baseURL: "http://127.0.0.1:5000",
+				// 添加固定的请求头
+			})
+			
+			// 添加请求拦截器：每次请求接口都会自动调用
+			request.interceptors.request.use(function (config) {
+			    // 在发送请求之前做些什么
+				// 接口需要鉴权：token
+				console.log('请求拦截器：',config)
+				
+				
+				
+			    return config;
+			  });
+
+			// 添加响应拦截器：每次请求完之后，A返回响应数据之前会调用。
+			request.interceptors.response.use(function (response) {
+			    // 对响应数据做点什么
+			    return response.data;
+				
+			  }, function (error) {
+			    // 对响应错误做点什么
+			    return error.response;
+			  });
+
+
+			//使用请求对象
+			request.get('/api/projects').then(function(data) {
+				console.log(data)
+			})
+			
+
+		</script>
+
+
+
+	</body>
+</html>

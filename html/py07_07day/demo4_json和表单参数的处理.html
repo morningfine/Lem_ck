@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 使用axios创建请求对象
+			const request = axios.create({
+				// 指定请求HTTP响应码错误范围
+				validateStatus: function(status) {
+					return true
+				},
+				// 指定基本的url地址
+				baseURL: "http://127.0.0.1:5000",
+				// 添加固定的请求头
+				headers: {
+					'X-Custom-Header': 'foobar'
+				},
+			})
+			// 发送post请求
+			
+			// json格式的参数传递： content-Type:application/json
+			// request.post('/api/user/login',{user:'python01',pwd:'lemonban'}).then(function(response){
+			// 	console.log(response.data)
+			// 	console.log(response.status)
+			// })
+
+			// 表单参数传递：content-Type：application/x-www-form-urlencoded format
+			// 创建表单参数对象
+			// const formData = new URLSearchParams();
+			// formData.append('user', 'python01')
+			// formData.append('pwd', 'lemonban')
+			// request.post('/api/user/login', formData).then(function(response) {
+			// 	console.log(response.data)
+			// 	console.log(response.status)
+			// })
+			
+			
+			
+		</script>
+
+
+
+	</body>
+</html>
