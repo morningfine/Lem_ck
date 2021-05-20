@@ -2,9 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>测试页面</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
+    <script type="text/javascript">
+        const request = axios.create({
+            baseURL:"http://api.zhaogangtest.com",
+            timeout:3000,
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        res = request.get("/web.api", {params:{
+            "_sm":"md5","_ft":"json","_ts":"1621233259706",'autoWriteOffSwitchQueryParam':'{"ourCompanyId":2346,"businessType":20,"businessOrderType":203}',
+                "_aid":500,"_tk":"FMRY17%2FdFKVzWy%2BPlNENJ%2FymU1UywxoOBW1e%2Fi2jhSpwGhDQWbLvFbPoi016db0f1b0FquEWGjTTbzmUKqFmGrxCodRYZCzLi4NadtfAM4d7nkmkXO1iTvAS71AA8%2F1jTTXKtdyrfiCNmQD1iYn%2F6kfQkIdIgt%2B7Kv88xkCQsFg%3D",
+                "_uid":800016210,"_tenantid":320006126,"_domid":2000,"_mt":"fundsmanager.service.autoWriteOffSwitchQuery",
+                "_sig":"9ffbee59363b095bcd175c5e8ce27570"
+        }})
+        res.then(function (responds) {
+            console.log(responds.status)
+            console.log(responds.data)
+            console.log("调用成功")
+        })
+        res.catch(function (responds) {
+            console.log(responds.status)
+            console.log("调用失败")
+        })
 
+    </script>
 </body>
 </html>

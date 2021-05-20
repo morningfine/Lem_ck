@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>前端第7天作业</title>
+		<!-- 导入vue组件 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- 导入axios组件 -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<!-- <login-con @login='recvData($event)'></login-con> -->
+			<login-con></login-con>
+			{{ info }}
+			<button type="button" @click="show">显示项目</button>
+
+		</div>
+
+		<script type="text/javascript">
+
+			const requs = axios.create({
+				validataStatus:function(Status){
+					return Status<500
+				},
+				baseURL:"http://api.keyou.site:8000",
+				headers:{
+					"Content-Type":"application/json;charset=UTF-8"
+				}
+			})
+			Vue.component("login-con", {
+				props: ["lists1"],
+			// 	template: `
+			// <form action="" method="post">
+			// 	用户名：<input type="text" name="user" id="user" :value=user /><br>
+			// 	密  码：<input type="password" name="pwd" id="pwd" :value=pwd /><br>
+			// 	<button type="button" @click="$emit('login','<search-list>{{ info11 }}</search-list>')" >提交</button>
+			// </form>
+			// `,
+				template: `
+				<form action="" method="post">
+					用户名：<input type="text" name="user" id="user" :value=user /><br>
+					密  码：<input type="password" name="pwd" id="pwd" :value=pwd /><br>
+					<button type="button" @click="login" >提交</button>
+				</form>
+				`,
+				data:function(){
+					return {
+						user:"musen123",
+						pwd:"1234567"
+					}
+				},
+				methods:{
+					login:function(){
+						debugger;
+						const re = requs.post("/user/login/",{'username':user.value,'password':pwd.value});
+						re.catch(function(response){
+							console.log("调用登录失败！",response.status)
+						});
+						re.then(function(response){
+							console.log("调用登录成功!",response);
+							window.sessionStorage.setItem('token',response.data.token)
+						});
+						console.log("登录成功！",user.value,pwd.value);
+					}
+				}
+			});
+			Vue.component("search-list",{
+				props:["info1"],
+				template:`
+				<h3>获取的项目列表为:{{ info }}</h3>
+				`,
+				data:function(){
+					return {
+						info11:info1
+					}
+				},
+				methods:{
+					show:function(){
+						alert("你好！")
+					}
+				}
+			})
+			Vue.component("html-con",{
+				template:""
+			})
+			var module = {
+				user1: "",
+				pwd1: ""
+			}
+			var module1 = {
+				info: null,
+				}
+			var views = {
+				el: "#app",
+				data: module1,
+				methods:{
+					show:function(){
+						requs.interceptors.request.use(function(config){
+							token = window.sessionStorage.getItem('token');
+							config.headers.Authentication = 'JWT '+ token;
+							console.log('请求拦截器：',config)
+							return config;
+						})
+						const pro = requs.get("/projects/");
+						pro.catch(function(response){
+							console.log("调用查询项目失败！",response.status)
+						});
+						pro.then(function(response){
+							console.log("调用查询项目成功!",response);
+						});
+					},
+					recvData:function(value){
+						console.log(value)
+						this.info = value
+					}
+
+				}
+			}
+			var aaa = new Vue(views);
+		</script>
+	</body>
+</html>
