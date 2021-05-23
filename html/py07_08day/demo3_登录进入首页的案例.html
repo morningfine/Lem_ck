@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入vue -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- axios 用来发送网络请求 -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入vue-router用来管理路由 -->
+		<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js" type="text/javascript"></script>
+		<!-- 引入elementUI -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			
+			<router-view></router-view>
+
+		</div>
+
+		<div></div>
+		<script type="text/javascript">
+			const request = axios.create({
+				// 指定请求HTTP响应码错误范围
+				validateStatus: function(status) {
+					return true
+				},
+				// 指定基本的url地址
+				baseURL: 'http://api.keyou.site:8000',
+			
+			})
+			
+			// 添加请求拦截器：每次请求接口都会自动调用
+			request.interceptors.request.use(function(config) {
+				// 在发送请求之前,判断是否有token
+				if (window.sessionStorage.getItem('token')) {
+					config.headers.Authorization = 'JWT ' + window.sessionStorage.getItem('token')
+				}
+				console.log('请求头', config.headers)
+				return config;
+			})
+			
+			
+			// 定义组件
+			const login = {
+				template: `
+				<div class="login_box" style="width: 600px;height: 400px; margin: 50px auto;text-align: center;">
+					<el-card class="box-card">
+						<h1>用 户 登 录</h1>
+						<el-form ref="form" :model="formLogin" label-width="80px">
+							<el-form-item label="账号">
+								<el-input v-model="formLogin.username"></el-input>
+							</el-form-item>
+							<el-form-item label="密码">
+								<el-input v-model="formLogin.password" type='password'></el-input>
+							</el-form-item>
+							<el-form-item>
+								<el-button type="primary" @click="loginHandle">点击登录</el-button>
+							</el-form-item>
+						</el-form>
+					</el-card>
+				</div>
+				`,
+				data(){
+					return{
+						formLogin: {
+							username: '',
+							password: ''
+						}
+					}
+				},
+				methods:{
+					// 点击登录之后，处理登录的方法
+					loginHandle: async function() {
+						// 请求登录接口
+						console.log('请求登录接口')
+						const response = await request.post('/user/login/', this.formLogin)
+						console.log(response)
+						// 判断登录请求是否成功 
+						if (response.status === 200) {
+							alert('登录成功')
+							window.sessionStorage.setItem('token', response.data.token)
+							this.$router.push('/home')
+						} else {
+							alert('登录失败')
+						}
+					}
+				}
+			}
+			const home = {
+				template: `<div>
+				<el-menu
+				  :default-active="activeIndex2"
+				  class="el-menu-demo"
+				  mode="horizontal"
+				  @select="handleSelect"
+				  background-color="#545c64"
+				  text-color="#fff"
+				  active-text-color="#ffd04b">
+				  <el-menu-item index="1"><router-link to="/cases">用例列表</router-link></el-menu-item>
+				 <el-menu-item index="2"><router-link to="/projects">项目列表</router-link></el-menu-item>
+				 <el-menu-item index="3"><router-link to="/interface">接口列表</router-link></el-menu-item>
+				</el-menu>
+				<router-view></router-view>
+				</div>`
+			}
+			const project = {
+				template: `<div>project </div>`
+			}
+			const cases = {
+				template: `<div> cases</div>`
+			}
+			const interface = {
+				template: `<div>interface</div>`
+			}
+
+			// 定义路由规则
+			const router = new VueRouter({
+				routes: [{
+						path: '/',
+						redirect: '/home'
+					},
+					{
+						path: '/login',
+						component: login
+					},
+					{
+						path: '/home',
+						component: home,
+						children:[
+							{
+								path: '/projects',
+								component: project
+							},
+							{
+								path: '/cases',
+								component: cases
+							},
+							{
+								path: '/interface',
+								component: interface
+							}
+						]
+					},
+					
+				]
+			})
+
+
+			// 初始vue对象
+			var vm = new Vue({
+				el: '#app',
+				router: router,
+				data: {
+					
+				},
+				methods: {
+					
+				}
+
+			})
+		</script>
+
+
+
+
+	</body>
+</html>

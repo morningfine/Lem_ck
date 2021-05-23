@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入vue -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- axios 用来发送网络请求 -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入vue-router用来管理路由 -->
+		<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js" type="text/javascript"></script>
+		<!-- 引入elementUI -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<router-view></router-view>
+		</div>
+
+		<script type="text/javascript">
+			const request = axios.create({
+				// 指定请求HTTP响应码错误范围
+				validateStatus: function(status) {
+					return true
+				},
+				// 指定基本的url地址
+				baseURL: 'http://api.keyou.site:8000',
+
+			})
+			// 添加请求拦截器：每次请求接口都会自动调用
+			request.interceptors.request.use(function(config) {
+				// 在发送请求之前,判断是否有token
+				if (window.sessionStorage.getItem('token')) {
+					config.headers.Authorization = 'JWT ' + window.sessionStorage.getItem('token')
+				}
+				console.log('请求头', config.headers)
+				return config;
+			})
+
+			const Login = {
+				template: `
+				<div class="box" style="width: 600px;height: 400px; margin:100px auto;text-align: center;">
+					<el-card class="box-card">
+						<h1> 用户登录</h1>
+						<el-form ref="formLogin" :model="formLogin" label-width="80px">
+							<el-form-item label="账号">
+								<el-input v-model="formLogin.user"></el-input>
+							</el-form-item>
+							<el-form-item label="密码">
+								<el-input v-model="formLogin.pwd" type='password'></el-input>
+							</el-form-item>
+							<el-form-item>
+								<el-button type="primary" @click="loginHandle">点击登录</el-button>
+							</el-form-item>
+						</el-form>
+					</el-card>
+				</div>`,
+				data() {
+					return {
+						formLogin: {
+							username: 'musen123',
+							password: '1234567'
+						}
+					}
+				},
+				methods: {
+					// 点击登录之后，处理登录的方法
+					loginHandle: async function() {
+						// 请求登录接口
+						console.log('请求登录接口')
+						const response = await request.post('/user/login/', this.formLogin)
+						window.sessionStorage.setItem('token', response.data.token)
+						this.$router.push('/home')
+					}
+				}
+			}
+
+			const Project = {
+				template: `
+				<div class="box2">
+					  <el-table
+					      :data="projects"
+					      style="width: 100%">
+						  <el-table-column
+						    prop="id"
+						    label="ID"
+						    width="60">
+						  </el-table-column>
+					      <el-table-column
+					        prop="create_time"
+					        label="日期"
+					        width="180">
+					      </el-table-column>
+					      <el-table-column
+					        prop="name"
+					        label="项目名"
+					        width="180">
+					      </el-table-column>
+					      <el-table-column
+					        prop="testcases"
+					        label="用例数">
+					      </el-table-column>
+					    </el-table>
+				</div>
+				`,
+				data() {
+					return {
+						projects: [],
+					}
+				},
+				mounted: async function() {
+					const response = await request.get('/projects/')
+					console.log(JSON.stringify(response.data))
+					this.projects = response.data.results
+				}
+			}
+
+			const testCase = {
+				template: `
+				<div class="box2">
+					  <el-table
+					      :data="cases"
+					      style="width: 100%">
+						  <el-table-column
+						    prop="id"
+						    label="ID"
+						    width="60">
+						  </el-table-column>
+					      <el-table-column
+					        prop="name"
+					        label="用例名"
+					        width="180">
+					      </el-table-column>
+					      <el-table-column
+					        prop="author"
+					        label="测试者">
+					      </el-table-column>
+					    </el-table>
+				</div>
+				`,
+				data() {
+					return {
+						cases: [],
+					}
+				},
+				mounted: async function() {
+					const response = await request.get('/testcases/')
+					console.log(JSON.stringify(response.data))
+					this.cases = response.data.results
+				}
+			}
+
+			const Home = {
+				template: `
+					<div>
+					<el-menu :default-active="activeIndex"   background-color="#545c64" active-text-color="#ffd04b" text-color="#fff" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+					 <el-menu-item index="1"> <router-link to="/project"><h3>项目列表</h3></router-link></el-menu-item>
+					 <el-menu-item index="2"> <router-link to="/cases"><h3>用例列表</h3></router-link></el-menu-item>
+					</el-menu>
+					<router-view></router-view>
+					</div>
+					`
+			}
+
+			// 创建路由对象
+			const router = new VueRouter({
+				// 定义路由规则
+				routes: [{
+						path: '/',
+						component: Home,
+					},
+					{
+						path: '/login',
+						component: Login,
+					},
+					{
+						path: '/home',
+						component: Home,
+						children: [{
+							path: '/project',
+							component: Project
+						}, {
+							path: '/cases',
+							component: testCase
+						}, ]
+					},
+				]
+			})
+
+			// 设置导航守卫
+			router.beforeEach((to, from, next) => {
+				//判断是否访问的是登录页面
+				if (to.path === '/login') return next()
+				// 判断当前是否能获取到token
+				if (window.sessionStorage.getItem('token')) return next()
+				// 没有token，则跳转到登录页面
+				return next('./login')
+			})
+
+			// 创建vue实例，时传入路由对象
+			var vm = new Vue({
+				el: '#app',
+				data: {},
+				router: router,
+
+			})
+		</script>
+
+		
+
+	</body>
+</html>

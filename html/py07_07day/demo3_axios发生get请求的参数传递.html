@@ -22,21 +22,21 @@
 				},
 			})
 			
-			//get方法传递查询字符串参数
+			// get方法传递查询字符串参数
 			// 方式一 ：通过params传递   get('url',{params:{key:value,key:value}})
-			//
-			// request.get('/api/interface',{
-			// 	params:{id:1001}
-			// }).then(function(response) {
-			// 	console.log(response.status)
-			// 	console.log(response.data)
-			// })
+
+			request.get('/api/interface',{
+				params:{id:1001}
+			}).then(function(response) {
+				console.log(response.status)
+				console.log(response.data)
+			})
 			// 方式二:直接在url后面拼接  url?key=value&key=value
-			//
-			// request.get('/api/interface?id=1001').then(function(response) {
-			// 	console.log(response.status)
-			// 	console.log(response.data)
-			// })
+
+			request.get('/api/interface?id=1001').then(function(response) {
+				console.log(response.status)
+				console.log(response.data)
+			})
 			
 			
 		</script>

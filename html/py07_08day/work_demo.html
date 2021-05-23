@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- axios 用来发送网络请求 -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		
+		<button type="button" onclick="login()"> 登录</button><!-- 
+		<button type="button" onclick="getProject()"> 获取项目</button> -->
+	</head>
+	<body>
+		<script type="text/javascript">
+			const request = axios.create({
+				// 指定请求HTTP响应码错误范围
+				validateStatus: function(status) {
+					return true
+				},
+				// 指定基本的url地址
+				baseURL: 'http://api.keyou.site:8000',
+
+			})
+
+			// 添加请求拦截器：每次请求接口都会自动调用
+			request.interceptors.request.use(function(config) {
+				// 在发送请求之前,判断是否有token
+				if (window.sessionStorage.getItem('token')) {
+					config.headers.Authorization = 'JWT ' + window.sessionStorage.getItem('token')
+				}
+				return config;
+			})
+
+			async function login() {
+				console.log('请求登录接口')
+				const response = await request.post('/user/login/', {
+					username: 'musen123',
+					password: '1234567'
+				})
+				console.log(response)
+				// 判断登录请求是否成功 
+				if (response.status === 200) {
+					alert('登录成功')
+					window.sessionStorage.setItem('token', response.data.token)
+				} else {
+					alert('登录失败')
+				}
+			}
+
+			async function getProject() {
+				console.log('请求项目列表接口')
+				const response = await request.get('/projects/')
+				console.log(JSON.stringify(response.data))
+			}
+
+			// // 调用登录函数
+			login()
+
+			// // 调用获取项目的函数
+			// getProject()
+		</script>
+
+
+	</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+		<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js" type="text/javascript"></script>
+		<!-- 引入vue -->
+	</head>
+	<body>
+		<div id="app">
+			<div class="box">
+				<!-- 这个路由访问的方式，叫做声明式路由 -->
+				<router-link to="/home"><button type="button">用户页面</button></router-link>
+				<router-link to="/login"><button type="button">登录页面</button> </router-link>
+				<router-link to="/user/1"><button type="button">用户</button> </router-link>
+				<router-link to="/user/2"><button type="button">用户</button> </router-link>
+
+				<input type="text" v-model="number">
+				<button type="button" @click="handle">提交数据</button>
+			</div>
+
+			<router-view></router-view>
+		</div>
+
+
+
+		<script type="text/javascript">
+			// 首页
+			const home = {
+				template: `<h1>这个是项目首页</h1>
+				`
+			}
+			const cases = {
+				template: `<h1>case页面</h1>
+				`
+			}
+			// 登录页面
+			const login = {
+				template: `
+				<h1>这个是项目登录页面</h1>
+				`
+			}
+			const user = {
+				template: `
+				<h1>这个是项目user页面---{{ $route.params.id }}</h1>
+				`
+			}
+			// 创建一个路由对象
+			const router = new VueRouter({
+				//通过路由route指定路由规则
+				routes: [{
+						path: '/login',
+						// 给路由设置名字
+						name: 'login',
+						component: login
+					},
+					{
+						path: '/home',
+						component: home
+					},
+					{
+						path: '/case',
+						component: cases
+					},
+					{	//  路由地址上匹配的参数，在路由对应的组件中可以使用 $route.params.参数名  获取
+						path: '/user/:id',
+						component: user,
+						name: 'user'
+					},
+				]
+			})
+
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					number: 0
+				},
+				methods: {
+					handle: function() {
+						if (this.number > 5) {
+							// 编程式路由
+							//跳转到另外一个页面
+							this.$router.push({
+								name: 'user',
+								params: {
+									id: this.number
+								}
+							})
+						}
+					}
+				},
+				// 将路由对象绑定到vue实例中
+				router
+
+			});
+		</script>
+
+	</body>
+</html>
