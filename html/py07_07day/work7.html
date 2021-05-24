@@ -7,117 +7,107 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<!-- 导入axios组件 -->
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入element-ui样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 引入element-ui组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
 	</head>
 	<body>
-		<div id="app">
-			<!-- <login-con @login='recvData($event)'></login-con> -->
-			<login-con></login-con>
-			{{ info }}
-			<button type="button" @click="show">显示项目</button>
-
+		<div id="app" style="text-align: center;width: 600px;height: 400px;margin: 100px auto;">
+			<h1>用户登录</h1>
+			<div>
+				<el-form :model="formLogin" ref="formLogin" label-width="100px">
+					<el-form-item label="账号">
+						<el-input type="text" v-model="formLogin.username"></el-input>
+					</el-form-item>
+					<el-form-item label="密码">
+						<el-input type="password" v-model="formLogin.password"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="loginHandle">点击登录</el-button>
+					</el-form-item>
+				</el-form>
+				<button type="button" @click="getProject()">获取所有项目</button>
+			</div>
+			<div>
+				<el-table
+				      :data="projects"
+				      style="width: 100%">
+					  <el-table-column
+					    prop="id"
+					    label="ID"
+					    width="180">
+					  </el-table-column>
+				      <el-table-column
+				        prop="create_time"
+				        label="日期"
+				        width="180">
+				      </el-table-column>
+				      <el-table-column
+				        prop="name"
+				        label="姓名"
+				        width="180">
+				      </el-table-column>
+				      <el-table-column
+				        prop="leader"
+				        label="领导">
+				      </el-table-column>
+					  <el-table-column
+					    prop="programmer"
+					    label="项目名">
+					  </el-table-column>
+					  <el-table-column
+					    prop="testcases"
+					    label="用例数">
+					  </el-table-column>
+				    </el-table>
+			</div>
 		</div>
-
 		<script type="text/javascript">
+			// 创建axios对象
+			const request = axios.create({
+				baseURL: 'http://api.keyou.site:8000',
+			})
 
-			const requs = axios.create({
-				validataStatus:function(Status){
-					return Status<500
-				},
-				baseURL:"http://api.keyou.site:8000",
-				headers:{
-					"Content-Type":"application/json;charset=UTF-8"
-				}
+			request.interceptors.request.use(function(config) {
+				token = window.sessionStorage.getItem("token");
+				if (token){
+					config.headers.Authorization = 'JWT '+ token;
+				};
+				return config;
 			})
-			Vue.component("login-con", {
-				props: ["lists1"],
-			// 	template: `
-			// <form action="" method="post">
-			// 	用户名：<input type="text" name="user" id="user" :value=user /><br>
-			// 	密  码：<input type="password" name="pwd" id="pwd" :value=pwd /><br>
-			// 	<button type="button" @click="$emit('login','<search-list>{{ info11 }}</search-list>')" >提交</button>
-			// </form>
-			// `,
-				template: `
-				<form action="" method="post">
-					用户名：<input type="text" name="user" id="user" :value=user /><br>
-					密  码：<input type="password" name="pwd" id="pwd" :value=pwd /><br>
-					<button type="button" @click="login" >提交</button>
-				</form>
-				`,
-				data:function(){
-					return {
-						user:"musen123",
-						pwd:"1234567"
-					}
-				},
-				methods:{
-					login:function(){
-						debugger;
-						const re = requs.post("/user/login/",{'username':user.value,'password':pwd.value});
-						re.catch(function(response){
-							console.log("调用登录失败！",response.status)
-						});
-						re.then(function(response){
-							console.log("调用登录成功!",response);
-							window.sessionStorage.setItem('token',response.data.token)
-						});
-						console.log("登录成功！",user.value,pwd.value);
-					}
-				}
-			});
-			Vue.component("search-list",{
-				props:["info1"],
-				template:`
-				<h3>获取的项目列表为:{{ info }}</h3>
-				`,
-				data:function(){
-					return {
-						info11:info1
-					}
-				},
-				methods:{
-					show:function(){
-						alert("你好！")
-					}
-				}
-			})
-			Vue.component("html-con",{
-				template:""
-			})
-			var module = {
-				user1: "",
-				pwd1: ""
-			}
-			var module1 = {
-				info: null,
-				}
+
 			var views = {
 				el: "#app",
-				data: module1,
-				methods:{
-					show:function(){
-						requs.interceptors.request.use(function(config){
-							token = window.sessionStorage.getItem('token');
-							config.headers.Authentication = 'JWT '+ token;
-							console.log('请求拦截器：',config)
-							return config;
-						})
-						const pro = requs.get("/projects/");
-						pro.catch(function(response){
-							console.log("调用查询项目失败！",response.status)
-						});
-						pro.then(function(response){
-							console.log("调用查询项目成功!",response);
-						});
+				data: {
+					formLogin: {
+						username: "musen123",
+						Password: "1234567"
 					},
-					recvData:function(value){
-						console.log(value)
-						this.info = value
+					projects:[]
+				},
+				methods: {
+					loginHandle: function() {
+						const res = request.post("/user/login/", this.formLogin)
+						res.catch(function(response) {
+							console.log("登录失败！")
+						})
+						res.then(function(response) {
+							window.sessionStorage.setItem("token",response.data.token);
+							console.log("登录成功");
+						})
+					},
+					getProject:async function(){
+						console.log('请求项目列表接口')
+						const sho = await request.get("/projects/")
+						console.log(JSON.stringify(sho.data))
+						this.projects = sho.data.results
 					}
-
 				}
 			}
-			var aaa = new Vue(views);
+
+			var aaa = new Vue(views)
 		</script>
 	</body>
 </html>
