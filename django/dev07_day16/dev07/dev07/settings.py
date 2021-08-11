@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'projects',
     # 'projects.apps.ProjectsConfig',
     'interfaces',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -178,19 +180,24 @@ REST_FRAMEWORK = {
     # 指定使用的认证类
     # a.在全局指定默认的认证类（指定认证方式）
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 1）指定使用JWT TOKEN认证类
+        # 2）在全局路由表中添加obtain_jwt_token路由（可以使用用户名和密码进行认证）
+        # 3）认证通过之后，在响应体中会返回token值
+        # 4）将token值设置请求头参数，key为Authorization，value为JWT token值
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         # b.Session会话认证
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
     ],
     # 指定使用的权限类
     # a.在全局指定默认的权限类（当认证通过之后，可以获取何种权限）
-    'DEFAULT_PERMISSION_CLASSES': [
+    # 'DEFAULT_PERMISSION_CLASSES': [
         # AllowAny不管是否有认证成功，都能获取所有权限
         # IsAdminUser管理员（管理员需要登录）具备所有权限
         # IsAuthenticated只要登录，就具备所有权限
         # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
 }
 
 LOGGING = {
@@ -216,7 +223,7 @@ LOGGING = {
     },
     # 指定日志输出渠道（日志输出的地方）
     'handlers': {
-        # 指定在console控制台（终端）的日志配置信息
+        # 指定在console控制台（终端）的日志配置行李箱
         'console': {
             # 指定日志记录等级
             'level': 'DEBUG',
@@ -238,10 +245,25 @@ LOGGING = {
     # 定义日志器
     'loggers': {
         # 指定日志器的名称
-        'dev07': {  # 定义了一个名为dev07的日志器
+        'dev07': {  # 定义了一个名为mytest的日志器
             'handlers': ['console', 'file'],
             'propagate': True,
             'level': 'DEBUG',  # 日志器接收的最低日志级别
         },
     }
+}
+
+# 指定使用的用户模型类，默认为auth子应用下的User
+# AUTH_USER_MODEL = 'users.UserModel'
+
+JWT_AUTH = {
+    # 修改JWT TOKEN认证请求头中Authorization value值的前缀，默认为JWT
+    # 'JWT_AUTH_HEADER_PREFIX': 'bearer',
+
+    # 指定TOKEN过期时间，默认为5分钟，可以使用JWT_EXPIRATION_DELTA指定
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+
+    # 修改处理payload的函数
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+        'utils.handle_jwt_response.jwt_response_payload_handler',
 }

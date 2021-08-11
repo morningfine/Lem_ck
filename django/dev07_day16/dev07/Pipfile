@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.douban.com/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+coreapi = "*"
+pygments = "*"
+markdown = "*"
+drf-yasg = "*"
+djangorestframework-jwt = "*"
+
+[requires]
+python_version = "3.8"
