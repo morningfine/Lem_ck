@@ -1,0 +1,19 @@
+name: '登录api接口'
+
+base_url: "${ENV(BASE_URL)}"
+request:
+    url: "/user/login/"
+    method: POST
+
+    headers:
+        Content-Type: "application/x-www-form-urlencoded"
+        User-Agent: "Mozilla/5.0"
+
+    data:
+        username: "$username"
+        password: "$password"
+
+    verify: false
+
+validate:
+    - eq: ["status_code", "$status_code"]

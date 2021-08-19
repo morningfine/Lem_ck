@@ -1,0 +1,9 @@
+config:
+    name: "登录接口"
+
+teststeps:
+-
+    name: "$title"
+    api: "api/login_api.yml"
+    validate:
+        - contains: ["content", "$msg"]
