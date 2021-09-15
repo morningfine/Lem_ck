@@ -1,0 +1,110 @@
+# 一、YAML配置文件的格式
+# 1、yaml是数据格式，不是数据类型（结构）
+# 2、yaml配置文件的后缀为.yml或者.yaml
+# 3、yaml中使用#作为注释，注释只能在某一行的前后，不能与key\value在同一行
+# 4、yaml中有两种结构，一种是key: value，value与冒号之间必须有空格
+#   另一种是 - key: value，“-”为列表结构
+# 5、yaml文件中嵌套的同一级条目前缩进必须一致（一般缩进2个空格）
+# 6、yaml中如果value使用引号（单引号或者双引号），那么该value为字符串类型
+# 7、如果value中只要有字母，哪怕没有添加引号，一般也会识别为字符串类型（false、true、on、off、null除外）
+# 8、value为false、true、on、off，是布尔类型，null为空
+# 9、value中为纯数字或者小数，会被识别为int或float类型
+
+# 二、HttpRunner yaml用例创建
+# 1、name指定当前用例名称
+name: '登录api接口'
+
+# 2、variables设置变量
+# a.指定当前用例的局部变量
+# b.可以在变量定义的下方任意地方调用
+# c.使用$变量进行调用
+# d.作用域为当前yaml文件，变量定义的下方，不能跨yaml文件进行调用
+variables:
+    var1: value1
+    var2: value2
+#    username: "keyou1"
+    username: "${ENV(USERNAME)}"
+    # password: "123456"
+    password: "${ENV(PASSWORD)}"
+
+# 指定base_url基路径
+# base_url: "http://127.0.0.1:8000"
+base_url: "${ENV(BASE_URL)}"
+
+# 3、request定义当前接口的配置信息
+# a.请求参数名称与requests模块完全兼容
+request:
+    # 4、指定当前接口的url地址
+    # url: "http://127.0.0.1:8000/user/login/"
+    # 如果在全局指定了base_url，那么会自动拼接base_url
+    url: "/user/login/"
+
+    # 5、method指定当前接口的请求方法名称
+    #   a.请求方法有：GET、POST、PUT、DELETE、PATCH
+    #   b.不区分大小写
+    method: POST
+
+    # 6、headers指定请求头参数
+    headers:
+        Content-Type: "application/x-www-form-urlencoded"
+        # User-Agent: "Mozilla/5.0"
+        # 可以在项目根路径下的debugtalk.py文件中，定义python函数或者类，用于处理动态参数
+        # 使用${函数名(参数1,参数2, ...)}
+        User-Agent: "${random_generate_uagent()}"
+
+    # 7、json指定请求体为json格式的参数
+#    json:
+#        username: "keyou1"
+#        password: "123456"
+
+    # 指定x-www-form-urlencoded参数
+    data:
+        # username: "keyou1"
+        username: "$username"
+        # password: "123456"
+        password: "$password"
+
+    verify: false
+    # 指定查询字符串参数
+#    params:
+#        p: 1
+#        s: 3
+
+
+# 8、validate指定断言
+validate:
+    # a.eq为断言类型，断言实际值与期望值是否相等
+    # 完整形式为"equals"，也可以使用"eq", "equals", "==", "is"
+    #  lt、le、gt、ge、ne等等
+    #   contains：判断实际值是否包含期望值
+    #   contained_by：判断实际值是否包含在期望值中
+    - equals: ["status_code", 200]
+    - ge: ["status_code", 100]
+
+    # b.方括号中，第一个参数为实际值，第二个参数为期望值
+    # 实际值：
+    #   status_code（相应状态码）, cookies, headers（响应头）,
+    #   content（响应体数据）, text（响应体数据）, json（响应体数据）
+    #   如果一个接口返回json格式的数据，那么content、text、json获取的是字典（嵌套字典的列表）
+    # - eq: ["content", 100]
+    # - eq: ["json", 100]
+    - contains: ["json", "username"]
+
+    # 实际值提取方式：
+    #   a.使用content加上“.”运算加上key，就能获取到相应值
+    #   b.使用content.key如果提取的结果为列表，可以使用列表中的数字索引来进行提取
+    - lt: ["json.user_id", 2]
+
+    # 断言方式的完整形式
+    # {"check": "实际值", "comparator": "断言类型", "expect": 期望值}
+    # - {"check": "json.user_id", "comparator": "lt", "expect": 2}
+
+
+# 9、运行用例
+#   a.hrun yaml用例（json用例）文件的绝对路径或者相对路径（推荐） 其他参数
+#   b.通过python程序执行yaml用例（json用例）文件
+
+# 10、设置环境变量（全局变量）
+#   a.可以在项目根路径下.env文件中创建环境变量
+#   b.定义：环境变量名=环境变量值
+#   c.调用：可以在任意一个yaml或者json用例文件中，使用${ENV(环境变量名)}

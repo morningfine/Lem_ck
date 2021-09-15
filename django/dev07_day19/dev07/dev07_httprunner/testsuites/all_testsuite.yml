@@ -15,7 +15,7 @@ testcases:
 #      - ["密码不正确", "keyou1", "1234567", 400, "non_field_errors"]
 
     parameters:
-#    title-username-password-status_code-msg:
+#    - title-username-password-status_code-msg:
 #      - ["正常登录", "keyou1", "123456", 200, "token"]
 #      - ["密码错误", "keyou1", "123457", 400, "non_field_errors"]
 #      - ["账号错误", "keyou1111", "123456", 400, "non_field_errors"]
@@ -23,4 +23,13 @@ testcases:
 #      - ["密码为空", "keyou1", "", 400, "password"]
 #        - title-username-password-status_code-msg: ${P(data/data.csv)}
         - title-username-password-status_code-msg: ${get_accounts()}
+
+
+# 变量的优先级：
+#   testsuite parameters > testsuite config variables > testcase config variables > api variables
+
+# base_url的优先级：
+#   testsuite config base_url > testcase config base_url > api base_url
+
+
 
