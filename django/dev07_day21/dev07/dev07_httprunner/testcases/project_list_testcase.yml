@@ -1,0 +1,21 @@
+# 指定用例的全局配置信息
+config:
+    name: "获取项目列表数据接口测试"
+
+# 定义当前用例的执行逻辑
+# a.实现接口依赖
+# b.实现接口更为复杂的执行逻辑
+# c.实现数据驱动测试
+teststeps:
+-
+    name: "先登录"
+    # 指定导入api文件夹下的接口的api最小执行单元
+    api: "dev07_httprunner/api/login_api.yml"
+    # 从相应结果中提取数据，并设置变量
+    # 设置的变量，可以在当前yaml用例文件下方任意地方调用
+    extract:
+        - TOKEN: "content.token"
+
+-
+    name: "获取项目列表数据接口"
+    api: "dev07_httprunner/api/projects_list_api.yml"

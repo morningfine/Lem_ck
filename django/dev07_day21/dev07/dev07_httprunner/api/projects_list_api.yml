@@ -1,0 +1,17 @@
+
+name: "获取项目列表数据"
+base_url: "${ENV(BASE_URL)}"
+
+request:
+    url: "/projects/"
+    method: GET
+    headers:
+        Accept: "application/json"
+        Authorization: "JWT $TOKEN"
+    params:
+        size: 3
+        page: 2
+
+validate:
+    - eq: ["status_code", 200]
+    - eq: ["json.results.0.id", 3]

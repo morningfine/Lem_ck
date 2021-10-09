@@ -1,0 +1,76 @@
+# 可以使用#指定注释信息，不会当作构建指令
+# 往往文件名为Dockerfile
+# 可以使用Dockerfile文件来自定义镜像
+# 一个Dockerfile文件中，至少需要有一个FROM
+# 当前FROM有三种类型
+# FROM 镜像名
+# FROM 镜像名:tag
+# FROM 镜像名@digest
+# 使用FROM 指定base image
+FROM python:3.7-alpine
+
+# LABEL key value
+# LABEL key1=value1 key2=value2
+LABEL maintaier="KeYou <keyou100@qq.com>"
+LABEL description="Dockerfile demo"
+
+# 指定进入到容器的特定目录中
+# 相当如linux中的cd命令
+# WORKDIR 容器中的目录
+# 如果指定的容器中目录不存在，会自动创建
+WORKDIR /myapp
+#WORKDIR aa/
+#WORKDIR /aa/
+
+# 用于将宿主机中的资源复制到容器中
+# COPY 宿主机文件或者目录 容器中的文件或者目录
+# 
+COPY . .
+#COPY fun.py /myapp
+# 如果需要复制文件到容器的某个目录中，那么最好在路径后面添加/
+# COPY fun.py /aaa 
+
+#ADD requirements.txt ./
+# ADD与COPY功能类似，用于将宿主机或者远程的资源复制到容器中
+# 可以将本地的压缩文件解压之后，复制到容器中
+# 也可以将远程资源路径下载之后，复制到容器中
+# ADD src.tar ./
+
+ENV myuser=lemon \
+    myage=18
+
+#EXPOSE 8000
+#VOLUME /myapp
+
+#RUN pip install -r requirements.txt && \
+#    cat fun.py && \
+#    ls /root
+RUN pip install -i https://pypi.douban.com/simple -r requirements.txt && \
+    chmod u+x docker-entrypoint.sh
+
+#RUN cat fun.py
+
+# 在运行容器时，会执行的默认指令
+# 有两种格式：
+# a.shell格式
+# b.exec格式
+#CMD python fun.py
+#CMD ls /
+#CMD ["python", "fun.py"]
+#CMD ["/bin/ls", "/"]
+
+#ENTRYPOINT ["python", "fun.py"]
+#ENTRYPOINT ["cat", "/etc/passwd"]
+# cat /etc/passwd /etc/hosts
+#ENTRYPOINT ["cat", "/etc/passwd"]
+#CMD ["/etc/hosts"]
+ENTRYPOINT ["/bin/sh", "docker-entrypoint.sh"]
+#ENTRYPOINT ["docker-entrypoint.sh"]
+
+
+# 使用docker build来构建镜像，Makefile
+# -t 指定构建镜像的名称和tag号，如果不指定tag，那么会自动使用latest 
+# -f 指定Dockerfile文件的路径，如果命名为Dockerfile并且在当前路径下，那么不指定-f参数 
+# . 指定构建时的上下文路径
+
+# docker build -t 镜像名:tag -f Dockerfile文件的路径 .
