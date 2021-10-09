@@ -1,0 +1,6 @@
+title,username,password,status_code,msg
+正常登录,keyou1,123456,200,token
+密码错误,keyou1,123457,400,non_field_errors
+账号错误,keyou1111,123456,400,non_field_errors
+用户名为空,,123456,400,username
+密码为空,keyou1,,400,password
